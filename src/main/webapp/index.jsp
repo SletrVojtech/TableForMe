@@ -10,7 +10,7 @@
   <head>
     <title>Table4Me</title>
   </head>
-  <% response.sendRedirect("${pageContext.request.contextPath}/users/menu.jsp"); %>
+  <% response.sendRedirect(pageContext.request.contextPath + "/users/menu.jsp"); %>
   <body>
   
   </body>
