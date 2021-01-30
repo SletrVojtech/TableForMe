@@ -131,6 +131,7 @@ Zde probíhá vyhledání dostupných rezervací podle zadaných údajů.
                 <input type="hidden" name="id" value="<%=id%>">
 
                 <%
+
                     if (times[day * 2 - 2] > minutes || (times[day * 2 - 1] - 90) < minutes) {
                          /*
                         Rezervace je na termín mimo otevírací dobu.

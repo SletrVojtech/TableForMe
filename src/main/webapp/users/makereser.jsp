@@ -103,10 +103,22 @@
 
     %>
     <div class="form-row align-items-center d-flex ">
-        <label class="p-3 "><b><%=dny[i]%> od</b></label>
-        <label class=" p-2"><%=so%> do</label>
+        <label class="p-3 "><b><%=dny[i]%> </b></label>
+        <%
+            if(so.equals("0:00") && sc.equals("0:00")){
+                %>
+        <label class=" p-2"> Zavřeno</label>
+        <%
+
+            }else {
+                %>
+        <label class=" p-2">od <%=so%> do</label>
         <label class=" p-2"><%=sc%>
         </label>
+        <%
+            }
+        %>
+
     </div>
     <br>
 
