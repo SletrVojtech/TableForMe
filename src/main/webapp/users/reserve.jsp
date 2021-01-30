@@ -55,6 +55,7 @@
             stm.setArray(5, capacities);
             stm.setString(6, name);
             stm.executeUpdate();
+            conn.close();
 
 
 %>

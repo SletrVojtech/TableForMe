@@ -27,6 +27,7 @@
         ResultSet rs = stm.executeQuery();
         PreparedStatement stm2 = conn.prepareStatement("SELECT name,city,adress FROM restaurants WHERE id=? ");
         ResultSet rs2;
+        conn.close();
         while (rs.next()) {
             stm2.setInt(1, rs.getInt("idres"));
             rs2 = stm2.executeQuery();

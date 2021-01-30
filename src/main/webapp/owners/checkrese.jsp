@@ -228,7 +228,7 @@
                             stm2.setArray(4, capacities);
                             stm2.setString(5, request.getParameter("name"));
                             stm2.executeUpdate();
-
+                            conn.close();
                         }
 
 

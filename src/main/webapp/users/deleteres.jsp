@@ -29,6 +29,7 @@
             PreparedStatement stm = conn.prepareStatement("DELETE FROM reservations WHERE id=?;");
             stm.setInt(1, id);
             stm.executeUpdate();
+            conn.close();
 
 
 %>

@@ -28,6 +28,7 @@
         PreparedStatement stm = conn.prepareStatement("SELECT id FROM owners WHERE username = ?;");
         stm.setString(1, uid);
         ResultSet rs3 = stm.executeQuery();
+        conn.close();
         rs3.next();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date d = Calendar.getInstance().getTime();

@@ -45,6 +45,7 @@ Zařízení již existuje <%
     stm2.setString(2, request.getParameter("password"));
     stm2.setString(3, request.getParameter("username"));
     stm2.executeUpdate();
+    conn.close();
 %>OK<%
         }
 

@@ -24,6 +24,7 @@ Pokud majitel restaurace zapomene heslo k účtu, je možné jej zapomoci admina
             Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
             PreparedStatement stm = conn.prepareStatement("SELECT id,name FROM owners");
             ResultSet rs = stm.executeQuery();
+            conn.close();
             while (rs.next()) {
 %>
 <form action="setpass.jsp" method="post">

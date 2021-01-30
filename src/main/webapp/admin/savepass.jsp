@@ -31,6 +31,7 @@
             stm2.setInt(2, Integer.parseInt(request.getParameter("id")));
 
             stm2.executeUpdate();
+            conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

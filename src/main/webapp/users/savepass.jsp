@@ -37,17 +37,20 @@ Zde proběhne uložení změněného hesla.
 Nejprve se zkontroluje správnost starého hesla.
  */
         if (!rs.next()) {
+            conn.close();
             response.sendRedirect("changepass.jsp?err=2");
         } else if (!newpass.equals(newpass2)) {
                         /*
            Zde proběhla kontrola nových hesel.
              */
+            conn.close();
             response.sendRedirect("changepass.jsp?err=1");
         } else {
             PreparedStatement stm2 = conn.prepareStatement("UPDATE owners SET password = crypt(?, gen_salt('bf')) WHERE username = ?;");
             stm2.setString(1, newpass);
             stm2.setString(2, uid);
             stm2.executeUpdate();
+            conn.close();
         }
 %>
 <body>

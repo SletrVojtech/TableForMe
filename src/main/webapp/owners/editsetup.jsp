@@ -27,6 +27,7 @@
                 PreparedStatement stm = conn.prepareStatement("SELECT time,capacity FROM restaurants JOIN owners ON restaurants.id = owners.id WHERE owners.username=? ;");
                 stm.setString(1, uid);
                 ResultSet rs = stm.executeQuery();
+                conn.close();
 
 
                 if (rs.next()) {
@@ -39,13 +40,26 @@
                     for (int i = 0; i < time.length / 2; i++) {
                         dop = i + "1";
                         dcl = i + "2";
-                        String so = time[2 * i] / 60 + ":";
+
+                        String so = "";
+                        if (time[2 * i] / 60 / 10 == 0) {
+                            so = "0" +  time[2 * i] / 60;
+                        } else {
+                            so ="" +  time[2 * i] / 60;
+                        }
+                        so+=":";
                         if (time[2 * i] % 60 / 10 == 0) {
                             so = so + "0" + time[2 * i] % 60;
                         } else {
                             so = so + time[2 * i] % 60;
                         }
-                        String sc = time[2 * i + 1] / 60 + ":";
+                        String sc = "";
+                        if (time[2 * i + 1] / 60 / 10 == 0) {
+                            sc = "0" + time[2 * i + 1] / 60;
+                        } else {
+                            sc = "" + time[2 * i + 1] / 60;
+                        }
+                        sc +=":";
                         if (time[2 * i + 1] % 60 / 10 == 0) {
                             sc = sc + "0" + time[2 * i + 1] % 60;
                         } else {

@@ -114,6 +114,7 @@
         PreparedStatement stm3 = conn.prepareStatement("SELECT date FROM reservations WHERE idres=? AND type=TRUE");
         stm3.setInt(1, idres);
         ResultSet rs3 = stm3.executeQuery();
+        conn.close();
         Boolean type = true;
         while (rs3.next()) {
             if (type) {

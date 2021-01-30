@@ -31,13 +31,16 @@
         Proběhne také kontrola stejnosti hesel a existence stejného uživatelského jména.
          */
         if (!pass.equals(pass2)) {
+            conn.close();
             response.sendRedirect("registration.jsp?err=1");
         } else {
             PreparedStatement stm = conn.prepareStatement("SELECT id FROM users WHERE username = ?;");
             stm.setString(1, name);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
+                conn.close();
                 response.sendRedirect("registration.jsp?err=2");
+
 
             } else {
 
@@ -45,6 +48,7 @@
                 stm2.setString(1, name);
                 stm2.setString(2, pass);
                 stm2.executeUpdate();
+                conn.close();
 
 %>
 

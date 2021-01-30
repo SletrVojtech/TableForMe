@@ -35,18 +35,22 @@ Nejprve se zkontroluje správnost starého hesla;
         stm.setString(1, uid);
         stm.setString(2, oldpass);
         ResultSet rs = stm.executeQuery();
+
         if (!rs.next()) {
+            conn.close();
             response.sendRedirect("editpass.jsp?err=2");
         } else if (!newpass.equals(newpass2)) {
             /*
            Zde proběhla kontrola nových hesel.
              */
+            conn.close();
             response.sendRedirect("editpass.jsp?err=1");
         } else {
             PreparedStatement stm2 = conn.prepareStatement("UPDATE owners SET password = crypt(?, gen_salt('bf')) WHERE username = ?;");
             stm2.setString(1, newpass);
             stm2.setString(2, uid);
             stm2.executeUpdate();
+            conn.close();
         }
 %>
 <br><br>

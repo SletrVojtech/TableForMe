@@ -132,7 +132,7 @@ Zde probíhá vyhledání dostupných rezervací podle zadaných údajů.
 
                 <%
                     if (times[day * 2 - 2] > minutes || (times[day * 2 - 1] - 90) < minutes) {
-                        /*
+                        conn.close(); /*
                         Rezervace je na termín mimo otevírací dobu.
                          */
                 %>
@@ -147,7 +147,7 @@ Zde probíhá vyhledání dostupných rezervací podle zadaných údajů.
                     s2.setInt(2, id);
                     ResultSet rs3 = s2.executeQuery();
                     if (rs3.next() && rs3.getBoolean("type") == true) {
-                                            /*
+                        conn.close();           /*
                     Zde se ověří, zda není tato restaurace pro daný den uzavřena.
                      */
                 %>
@@ -174,6 +174,7 @@ Zde probíhá vyhledání dostupných rezervací podle zadaných údajů.
                     s.setInt(3, minutes - 120);
                     s.setInt(4, minutes + 120);
                     ResultSet rs2 = s.executeQuery();
+                    conn.close();
                     Array actualar;
                     Integer[] actual;
                     int counter;

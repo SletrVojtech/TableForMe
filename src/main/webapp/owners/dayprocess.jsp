@@ -45,6 +45,7 @@ Nejprve se vymažou všechny existující rezervace.
             stm3.setInt(1, id);
             stm3.setDate(2, Date.valueOf(l));
             stm3.executeUpdate();
+            conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
