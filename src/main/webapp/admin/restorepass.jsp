@@ -15,7 +15,7 @@
     request.setCharacterEncoding("UTF-8");
     String uid = (String) session.getAttribute("admin");
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/admin/adminLogin.jsp");
+        response.sendRedirect("adminLogin.jsp");
     } else {
         try {
             Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));

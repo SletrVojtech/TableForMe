@@ -15,7 +15,7 @@
 
 <%
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/users/menu.jsp");
+        response.sendRedirect("menu.jsp");
     } else {
 
 

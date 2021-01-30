@@ -15,7 +15,7 @@
 <h2><b>Vaše nadcházející rezervace</b></h2>
 <%
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/users/menu.jsp");
+        response.sendRedirect("menu.jsp");
     } else {
         Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
         PreparedStatement stm = conn.prepareStatement("SELECT date,time,name,idres,reservations.id FROM reservations INNER JOIN users ON reservations.idus = users.id WHERE users.username =? ORDER BY" +

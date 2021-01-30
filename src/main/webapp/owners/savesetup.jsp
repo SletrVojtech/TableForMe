@@ -14,7 +14,7 @@
 </head>
 <%
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/owners/login.jsp");
+        response.sendRedirect("login.jsp");
     } else {
         try {
             Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
@@ -28,7 +28,7 @@
             request.setCharacterEncoding("UTF-8");
             String city = request.getParameter("city");
             if (city == null) {
-                response.sendRedirect("/TableForMe2/owners/home.jsp");
+                response.sendRedirect("home.jsp");
             } else {
                 String adress = request.getParameter("adress");
                 String open = "1";

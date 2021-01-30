@@ -20,9 +20,9 @@
 
 <%
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/users/login.jsp");
+        response.sendRedirect("login.jsp");
     } else if (request.getParameter("date") == null) {
-        response.sendRedirect("/TableForMe2/users/menu.jsp");
+        response.sendRedirect("menu.jsp");
     } else {
         String[] date = request.getParameter("date").split("-");
         LocalDate l = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
@@ -49,7 +49,7 @@
         String[] time = request.getParameter("time").split(":");
         int minutes = Integer.parseInt(time[0]) * 60 + Integer.parseInt(time[1]);
         if (today.equals(request.getParameter("date")) && todaytime > minutes) {
-            response.sendRedirect("/TableForMe2/users/findres.jsp?err=1");
+            response.sendRedirect("findres.jsp?err=1");
         } else {
 
 
@@ -58,7 +58,6 @@
                 PreparedStatement stm;
                 ResultSet rs;
                 if (request.getParameter("id") != null) {
-                    System.out.println("jsem tu s id");
                     stm = conn.prepareStatement("SELECT * FROM restaurants WHERE id=?;");
                     stm.setInt(1, Integer.parseInt(request.getParameter("id")));
                     rs = stm.executeQuery();

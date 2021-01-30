@@ -20,7 +20,7 @@
     if (uid == null) {
         String username = request.getParameter("username");
         if (username == null) {
-            response.sendRedirect("/TableForMe2/owners/login.jsp");
+            response.sendRedirect("login.jsp");
         } else {
             String pass = request.getParameter("password");
             try {
@@ -34,7 +34,7 @@
                     session.setAttribute("owner", username);
 
                 } else {
-                    response.sendRedirect("/TableForMe2/owners/login.jsp?err=1");
+                    response.sendRedirect("login.jsp?err=1");
                 }
                 conn.close();
 
@@ -59,7 +59,7 @@
             rs.next();
             boolean b = rs.getBoolean("state");
             if (!b) {
-                response.sendRedirect("/TableForMe2/owners/setup.jsp");
+                response.sendRedirect("setup.jsp");
             }
             conn.close();
 

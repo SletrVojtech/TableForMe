@@ -14,9 +14,9 @@
 </head>
 <%
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/owners/login.jsp");
+        response.sendRedirect("login.jsp");
     } else if (request.getParameter("date") == null) {
-        response.sendRedirect("/TableForMe2/owners/home.jsp");
+        response.sendRedirect("home.jsp");
     } else {
         try {
             Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));

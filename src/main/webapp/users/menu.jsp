@@ -33,7 +33,7 @@
                     session.setAttribute("user", username);
 
                 } else {
-                    response.sendRedirect("/TableForMe2/users/login.jsp?err=1");
+                    response.sendRedirect("login.jsp?err=1");
                 }
                 conn.close();
             } catch (Exception e) {

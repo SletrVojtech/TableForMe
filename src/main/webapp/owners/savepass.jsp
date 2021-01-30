@@ -14,9 +14,9 @@
 <%
 
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/owners/login.jsp");
+        response.sendRedirect("login.jsp");
     } else if (request.getParameter("oldpass") == null) {
-        response.sendRedirect("/TableForMe2/owners/home.jsp");
+        response.sendRedirect("home.jsp");
     } else {
 
 
@@ -32,9 +32,9 @@
         stm.setString(2, oldpass);
         ResultSet rs = stm.executeQuery();
         if (!rs.next()) {
-            response.sendRedirect("/TableForMe2/owners/editpass.jsp?err=2");
+            response.sendRedirect("editpass.jsp?err=2");
         } else if (!newpass.equals(newpass2)) {
-            response.sendRedirect("/TableForMe2/owners/editpass.jsp?err=1");
+            response.sendRedirect("editpass.jsp?err=1");
         } else {
             PreparedStatement stm2 = conn.prepareStatement("UPDATE owners SET password = crypt(?, gen_salt('bf')) WHERE username = ?;");
             stm2.setString(1, newpass);

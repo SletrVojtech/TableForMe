@@ -13,9 +13,9 @@
 </head>
 <br><br><%
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/users/login.jsp");
+        response.sendRedirect("login.jsp");
     } else if (request.getParameter("id") == null) {
-        response.sendRedirect("/TableForMe2/users/menu.jsp");
+        response.sendRedirect("menu.jsp");
     } else {
 
 
@@ -30,7 +30,7 @@
             int idres = Integer.parseInt(request.getParameter("id"));
             String ocupation = request.getParameter("ocuppy");
             if (request.getParameter("id").isEmpty()) {
-                response.sendRedirect("/TableForMe2/users/menu.jsp");
+                response.sendRedirect("menu.jsp");
             } else {
 
 
@@ -157,7 +157,6 @@
 
     </form>
 </div>
-
 
 </body>
 </html>

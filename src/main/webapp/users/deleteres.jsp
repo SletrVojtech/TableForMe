@@ -16,9 +16,9 @@
 
 
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/users/login.jsp");
+        response.sendRedirect("login.jsp");
     } else if (request.getParameter("id") == null) {
-        response.sendRedirect("/TableForMe2/users/menu.jsp");
+        response.sendRedirect("menu.jsp");
     } else {
         try {
             Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));

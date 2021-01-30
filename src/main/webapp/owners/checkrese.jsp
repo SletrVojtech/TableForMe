@@ -19,9 +19,9 @@
 
 <%
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/owners/login.jsp");
+        response.sendRedirect("login.jsp");
     } else if (request.getParameter("date") == null) {
-        response.sendRedirect("/TableForMe2/owners/home.jsp");
+        response.sendRedirect("home.jsp");
     } else {
         String[] date = request.getParameter("date").split("-");
         LocalDate l = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
@@ -48,7 +48,7 @@
         String[] time = request.getParameter("time").split(":");
         int minutes = Integer.parseInt(time[0]) * 60 + Integer.parseInt(time[1]);
         if (today.equals(request.getParameter("date")) && todaytime > minutes) {
-            response.sendRedirect("/TableForMe2/owners/reservation.jsp?err=1");
+            response.sendRedirect("reservation.jsp?err=1");
         } else {
 
 
@@ -72,13 +72,13 @@
 
 
                 if (times[day * 2 - 2] > minutes || (times[day * 2 - 1] - 90) < minutes) {
-                    response.sendRedirect("/TableForMe2/owners/reservation.jsp?err=2");
+                    response.sendRedirect("reservation.jsp?err=2");
                 } else {
                     Statement s2 = conn.createStatement();
                     ResultSet rs3 = s2.executeQuery("SELECT type FROM reservations WHERE date='" + request.getParameter("date") + "'" +
                             "AND idRes=" + id + "AND time =1;");
                     if (rs3.next() && rs3.getBoolean("type") == true) {
-                        response.sendRedirect("/TableForMe2/owners/reservation.jsp?err=2");
+                        response.sendRedirect("reservation.jsp?err=2");
                     } else {
 
 
@@ -132,7 +132,7 @@
 
                         int number = Integer.parseInt(request.getParameter("number"));
                         if (mincapacity < number) {
-                            response.sendRedirect("/TableForMe2/owners/reservation.jsp?err=3");
+                            response.sendRedirect("reservation.jsp?err=3");
                         } else {
                             int lenght = min.length;
                             Integer[] occupation = min.clone();

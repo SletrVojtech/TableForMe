@@ -13,7 +13,7 @@
 <%
     String uid = (String) session.getAttribute("admin");
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/admin/adminLogin.jsp");
+        response.sendRedirect("adminLogin.jsp");
     } else {
 
 
@@ -21,7 +21,7 @@
 <body>
 <div style="align-content: center">
     <h1>Vytvoření nové restaurace</h1>
-    <form method="post" action="${pageContext.request.contextPath}/admin/processNewPlace.jsp" id="newForm"
+    <form method="post" action="processNewPlace.jsp" id="newForm"
           accept-charset="utf-8">
         <label for="name">Název restaurace:</label>
         <input type="text" id="name" name="name">

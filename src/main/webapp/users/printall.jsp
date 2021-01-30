@@ -17,7 +17,7 @@
 
 <%
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/users/login.jsp");
+        response.sendRedirect("login.jsp");
     } else {
         try {
 

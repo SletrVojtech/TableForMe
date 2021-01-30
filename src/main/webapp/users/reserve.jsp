@@ -14,9 +14,9 @@
 <br><br><%
     request.setCharacterEncoding("UTF-8");
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/users/login.jsp");
+        response.sendRedirect("login.jsp");
     } else if (request.getParameter("idres") == null) {
-        response.sendRedirect("/TableForMe2/users/menu.jsp");
+        response.sendRedirect("menu.jsp");
     } else {
         try {
             Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
@@ -28,7 +28,7 @@
             String date = request.getParameter("date");
             String name = request.getParameter("name");
             if (ocupation == null) {
-                response.sendRedirect("/TableForMe2/users/menu.jsp");
+                response.sendRedirect("menu.jsp");
             }
             String[] cap = ocupation.split(",");
             Integer[] capacity = new Integer[cap.length * 2];

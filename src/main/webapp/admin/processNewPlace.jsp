@@ -15,9 +15,9 @@
 <% request.setCharacterEncoding("UTF-8");
     String uid = (String) session.getAttribute("admin");
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/admin/adminLogin.jsp");
+        response.sendRedirect("adminLogin.jsp");
     } else if(request.getParameter("name") == null){
-        response.sendRedirect("/TableForMe2/admin/home.jsp");
+        response.sendRedirect("home.jsp");
         }else{
 
         try {

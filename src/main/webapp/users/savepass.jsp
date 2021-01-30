@@ -13,9 +13,9 @@
 </head>
 <%
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/users/menu.jsp");
+        response.sendRedirect("menu.jsp");
     } else if (request.getParameter("pass") == null) {
-        response.sendRedirect("/TableForMe2/users/menu.jsp");
+        response.sendRedirect("menu.jsp");
     } else {
 
 
@@ -31,9 +31,9 @@
         stm.setString(2, oldpass);
         ResultSet rs = stm.executeQuery();
         if (!rs.next()) {
-            response.sendRedirect("/TableForMe2/users/changepass.jsp?err=2");
+            response.sendRedirect("changepass.jsp?err=2");
         } else if (!newpass.equals(newpass2)) {
-            response.sendRedirect("/TableForMe2/users/changepass.jsp?err=1");
+            response.sendRedirect("changepass.jsp?err=1");
         } else {
             PreparedStatement stm2 = conn.prepareStatement("UPDATE owners SET password = crypt(?, gen_salt('bf')) WHERE username = ?;");
             stm2.setString(1, newpass);

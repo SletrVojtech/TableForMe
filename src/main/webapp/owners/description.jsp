@@ -14,7 +14,7 @@
 <br><br>
 <%
     if (uid == null) {
-        response.sendRedirect("/TableForMe2/owners/login.jsp");
+        response.sendRedirect("login.jsp");
         //https://www.w3schools.com/tags/tag_textarea.asp
     } else {
         try {

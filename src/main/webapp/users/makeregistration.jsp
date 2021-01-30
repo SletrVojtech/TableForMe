@@ -14,7 +14,7 @@
 </head>
 <%
     if (request.getParameter("name") == null) {
-        response.sendRedirect("/TableForMe2/users/menu.jsp");
+        response.sendRedirect("menu.jsp");
     } else {
 
 
@@ -25,7 +25,7 @@
 
         Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
         if (!pass.equals(pass2)) {
-            response.sendRedirect("/TableForMe2/users/registration.jsp?err=1");
+            response.sendRedirect("registration.jsp?err=1");
         } else {
             PreparedStatement stm2 = conn.prepareStatement("INSERT INTO users (username,password) VALUES(?,crypt(?, gen_salt('bf')));");
             stm2.setString(1, name);

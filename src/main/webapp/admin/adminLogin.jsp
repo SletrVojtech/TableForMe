@@ -22,7 +22,7 @@
 <body>
 <div style="text-align: center">
     <h1>Admin Login</h1>
-    <form action="${pageContext.request.contextPath}/admin/home.jsp" method="post" id="loginForm">
+    <form action="home.jsp" method="post" id="loginForm">
         <label for="username">Username:</label>
         <input id="username" name="username"/>
         <br><br>

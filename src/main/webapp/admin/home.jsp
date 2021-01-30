@@ -17,7 +17,7 @@
     if (uid == null) {
         String name = request.getParameter("username");
         if (request.getParameter("username") == null) {
-            response.sendRedirect("/TableForMe2/admin/adminLogin.jsp");
+            response.sendRedirect("adminLogin.jsp");
         } else {
             String pass = request.getParameter("password");
             try {
@@ -31,7 +31,7 @@
                     session.setAttribute("admin", name);
                 } else {
                     //https://www.tutorialspoint.com/how-to-read-request-parameters-passed-in-url-using-jsp
-                    response.sendRedirect("/TableForMe2/admin/adminLogin.jsp?err=1");
+                    response.sendRedirect("adminLogin.jsp?err=1");
                 }
 
             } catch (Exception e) {
