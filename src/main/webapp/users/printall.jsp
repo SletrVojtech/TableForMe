@@ -16,9 +16,6 @@
 <h3 style="color: black"><b>Výpis všech dostupných restaurací:</b></h3><br><br>
 
 <%
-    if (uid == null) {
-        response.sendRedirect("login.jsp");
-    } else {
         try {
 
             Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
@@ -81,7 +78,7 @@
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+
 %>
 
 </body>

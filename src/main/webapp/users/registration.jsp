@@ -17,6 +17,8 @@
         err = "";
     } else if (err.equals("1")) {
         err = "Zadaná hesla se neshodují";
+    } else if(err.equals("2")){
+        err = "Uživatel s tímto jménem již existuje";
     }
 
 %>

@@ -27,11 +27,19 @@
         if (!pass.equals(pass2)) {
             response.sendRedirect("registration.jsp?err=1");
         } else {
+            PreparedStatement stm = conn.prepareStatement("SELECT id FROM users WHERE username = ?;");
+            stm.setString(1, name);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                response.sendRedirect("registration.jsp?err=2");
+
+    } else {
+
             PreparedStatement stm2 = conn.prepareStatement("INSERT INTO users (username,password) VALUES(?,crypt(?, gen_salt('bf')));");
             stm2.setString(1, name);
             stm2.setString(2, pass);
             stm2.executeUpdate();
-        }
+
 %>
 
 <div style="text-align: center">
@@ -42,6 +50,7 @@
 
 </body>
 </html>
-<%
+<% }
+    }
     }
 %>

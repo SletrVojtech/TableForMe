@@ -13,6 +13,7 @@
     <title>Ukládání dat restaurace</title>
 </head>
 <%
+    request.setCharacterEncoding("UTF-8");
     if (uid == null) {
         response.sendRedirect("login.jsp");
     } else {
@@ -25,7 +26,7 @@
             rs.next();
             String name = rs.getString("name");
             int id = rs.getInt("id");
-            request.setCharacterEncoding("UTF-8");
+
             String city = request.getParameter("city");
             if (city == null) {
                 response.sendRedirect("home.jsp");
