@@ -16,23 +16,23 @@
 <h3 style="color: black"><b>Výpis všech dostupných restaurací:</b></h3><br><br>
 
 <%
-        try {
+    try {
 
-            Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM restaurants;");
-            ResultSet rs = stm.executeQuery();
-            String[] types = new String[]{"česká a tradiční", "evropská", "americká", "asijská"};
-            String name, description, city;
-            int id;
-            Integer[] category = null;
-            while (rs.next()) {
-                name = rs.getString("name");
-                description = rs.getString("description");
-                if (description == null) description = "";
-                city = rs.getString("city");
-                id = rs.getInt("id");
-                Array categories = rs.getArray("category");
-                if (categories != null) category = (Integer[]) categories.getArray();
+        Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
+        PreparedStatement stm = conn.prepareStatement("SELECT * FROM restaurants;");
+        ResultSet rs = stm.executeQuery();
+        String[] types = new String[]{"česká a tradiční", "evropská", "americká", "asijská"};
+        String name, description, city;
+        int id;
+        Integer[] category = null;
+        while (rs.next()) {
+            name = rs.getString("name");
+            description = rs.getString("description");
+            if (description == null) description = "";
+            city = rs.getString("city");
+            id = rs.getInt("id");
+            Array categories = rs.getArray("category");
+            if (categories != null) category = (Integer[]) categories.getArray();
 
 
 %>
@@ -72,12 +72,12 @@
 <%
 
 
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
 
 %>
 

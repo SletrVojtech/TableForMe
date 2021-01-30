@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>Nastavení restaurace</title>
+    <link rel="shortcut icon" href="../images/favicon.ico">
 </head>
 <%
     String uid = (String) session.getAttribute("owner");

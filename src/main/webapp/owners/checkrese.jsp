@@ -47,7 +47,7 @@
         int todaytime = hour * 60 + minute + 90;
         String[] time = request.getParameter("time").split(":");
         int minutes = Integer.parseInt(time[0]) * 60 + Integer.parseInt(time[1]);
-        if (today.equals(request.getParameter("date")) && todaytime  > minutes) {
+        if (today.equals(request.getParameter("date")) && todaytime > minutes) {
             response.sendRedirect("reservation.jsp?err=1");
         } else {
 

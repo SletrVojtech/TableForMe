@@ -22,27 +22,34 @@
 %>
 
 
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center flex-column">
+    <div class="d-flex justify-content-center">
 
+        <form action="menu.jsp" method="post">
+            <div class="form-group ">
+                <label for="name">Zadejte uživatelské jméno:</label>
+                <input type="text" class="form-control" id="name" name="username" placeholder="VelkyHladovec"
+                       maxlength="20"
+                       pattern="[A-Za-z0-9]{3,}">
+            </div>
 
-    <form action="menu.jsp" method="post">
-        <div class="form-group ">
-            <label for="name">Zadejte uživatelské jméno:</label>
-            <input type="text" class="form-control" id="name" name="username" placeholder="VelkyHladovec" maxlength="20"
-                   pattern="[A-Za-z0-9]{3,}">
-        </div>
-
-        <%
-            //https://www.w3schools.com/tags/att_input_pattern.asp
-        %>
-        <div class="form-group ">
-            <label for="pass">Zadejte heslo:</label>
-            <input type="password" class="form-control" id="pass" name="password" minlength="8" maxlength="15"
-                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}">
-        </div>
-        <%=err%><br>
-        <button type="submit" class="btn btn-primary">Přihlásit se</button>
-    </form>
+            <%
+                //https://www.w3schools.com/tags/att_input_pattern.asp
+            %>
+            <div class="form-group ">
+                <label for="pass">Zadejte heslo:</label>
+                <input type="password" class="form-control" id="pass" name="password" minlength="8" maxlength="15"
+                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}">
+            </div>
+            <%=err%><br>
+            <button type="submit" class="btn btn-primary">Přihlásit se</button>
+        </form>
+    </div>
+    <div class="d-flex justify-content-center">
+        <form action="registration.jsp" method="post">
+            <button type="submit" class="btn btn-primary">Jěště nemám účet</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>
