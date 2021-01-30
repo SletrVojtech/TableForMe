@@ -68,16 +68,18 @@
 
 
                 if (times[day * 2 - 2] > minutes || (times[day * 2 - 1] - 90) < minutes) {
+                    conn.close();
                     response.sendRedirect("reservation.jsp?err=2");
                 } else {
                     /*
                     Zde se ověří zda není tato restaurace pro daný den uzavřena.
                      */
                     PreparedStatement s2 = conn.prepareStatement("SELECT type FROM reservations WHERE date=? AND idRes=? AND time =1;");
-                    s2.setDate(1,Date.valueOf(l));
-                    s2.setInt(2,id);
+                    s2.setDate(1, Date.valueOf(l));
+                    s2.setInt(2, id);
                     ResultSet rs3 = s2.executeQuery();
                     if (rs3.next() && rs3.getBoolean("type") == true) {
+                        conn.close();
                         response.sendRedirect("reservation.jsp?err=2");
                     } else {
 
@@ -92,10 +94,10 @@
                         ArrayList<Integer> linetime = new ArrayList();
                         PreparedStatement s = conn.prepareStatement("SELECT time,capacity FROM reservations WHERE date= ?AND idRes= ?AND time BETWEEN ? AND ?; ");
                         s.setDate(1, Date.valueOf(l));
-                        s.setInt(2,id);
-                        s.setInt(3,minutes -120);
-                        s.setInt(4, minutes +120);
-                       ResultSet rs2 = s.executeQuery();
+                        s.setInt(2, id);
+                        s.setInt(3, minutes - 120);
+                        s.setInt(4, minutes + 120);
+                        ResultSet rs2 = s.executeQuery();
                         Array actualar;
                         Integer[] actual;
                         int counter;

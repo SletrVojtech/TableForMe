@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.sql.*" %>
 <%@include file="findres.jsp" %>
+
+
 <html>
 <head>
 
@@ -37,22 +39,24 @@
                     /*
                     Přihlášení bylo úspěšné.
                      */
+                    conn.close();
                     session.setAttribute("user", username);
 
                 } else {
                     /*
                     Přihlášení bylo neúspěšné. Uživatel musí údaje zadat znovu
                      */
+                    conn.close();
                     response.sendRedirect("login.jsp?err=1");
                 }
-                conn.close();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }
-    }
-%>
+    } %>
+
 
 </body>
 </html>

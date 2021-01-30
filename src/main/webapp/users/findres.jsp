@@ -77,8 +77,18 @@
             %>
             <label><%=err%>
             </label>
-            <button type="submit" class="btn btn-warning">Vyhledat</button>
 
+            <%
+                if (uid == null) {
+            %>
+            <button type="button" class="btn" diabled>Pro vyhledávání je potřeba se přihlásit.</button>
+            <%
+            } else {
+            %>
+            <button type="submit" class="btn btn-warning">Vyhledat</button>
+            <%
+                }
+            %>
         </div>
     </div>
 </form>

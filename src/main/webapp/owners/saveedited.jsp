@@ -29,7 +29,6 @@
             stm.setString(1, uid);
             ResultSet rs = stm.executeQuery();
             rs.next();
-            conn.close();
             int id = rs.getInt("id");
             request.setCharacterEncoding("UTF-8");
             String open = "1";

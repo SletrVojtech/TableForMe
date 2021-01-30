@@ -24,7 +24,6 @@
         Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
         PreparedStatement stm = conn.prepareStatement("SELECT * FROM restaurants;");
         ResultSet rs = stm.executeQuery();
-        conn.close();
         String[] types = new String[]{"česká a tradiční", "evropská", "americká", "asijská"};
         String name, description, city;
         int id;
@@ -77,6 +76,7 @@
 
 
         }
+        conn.close();
 
 
     } catch (Exception e) {

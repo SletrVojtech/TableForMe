@@ -33,6 +33,7 @@
             int idres = Integer.parseInt(request.getParameter("id"));
             String ocupation = request.getParameter("ocuppy");
             if (request.getParameter("id").isEmpty()) {
+                conn.close();
                 response.sendRedirect("menu.jsp");
             } else {
                 /*
@@ -114,7 +115,7 @@
         PreparedStatement stm3 = conn.prepareStatement("SELECT date FROM reservations WHERE idres=? AND type=TRUE");
         stm3.setInt(1, idres);
         ResultSet rs3 = stm3.executeQuery();
-        conn.close();
+
         Boolean type = true;
         while (rs3.next()) {
             if (type) {
@@ -128,6 +129,7 @@
     </label><br>
     <%
         }
+        conn.close();
 /*
 Pokud uživateli na minulé straně byl nalezen volný termín pro rezervaci, může ji zde zadáním jména dokončit.
  */

@@ -32,6 +32,7 @@
 
             String city = request.getParameter("city");
             if (city == null) {
+                conn.close();
                 response.sendRedirect("home.jsp");
             } else {
                 String adress = request.getParameter("adress");

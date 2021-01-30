@@ -27,10 +27,10 @@
                 PreparedStatement stm = conn.prepareStatement("SELECT time,capacity FROM restaurants JOIN owners ON restaurants.id = owners.id WHERE owners.username=? ;");
                 stm.setString(1, uid);
                 ResultSet rs = stm.executeQuery();
-                conn.close();
 
 
                 if (rs.next()) {
+
                     Array times = rs.getArray("time");
                     Array capacities = rs.getArray("capacity");
                     String[] dny = new String[]{"Pondělí:", "Úterý:", "Středa:", "Čtvrtek:", "Pátek:", "Sobota:", "Neděle:"};
@@ -43,11 +43,11 @@
 
                         String so = "";
                         if (time[2 * i] / 60 / 10 == 0) {
-                            so = "0" +  time[2 * i] / 60;
+                            so = "0" + time[2 * i] / 60;
                         } else {
-                            so ="" +  time[2 * i] / 60;
+                            so = "" + time[2 * i] / 60;
                         }
-                        so+=":";
+                        so += ":";
                         if (time[2 * i] % 60 / 10 == 0) {
                             so = so + "0" + time[2 * i] % 60;
                         } else {
@@ -59,7 +59,7 @@
                         } else {
                             sc = "" + time[2 * i + 1] / 60;
                         }
-                        sc +=":";
+                        sc += ":";
                         if (time[2 * i + 1] % 60 / 10 == 0) {
                             sc = sc + "0" + time[2 * i + 1] % 60;
                         } else {
@@ -92,6 +92,7 @@
 
 
             }
+            conn.close();
         %>
 
         <button type="submit" class="btn btn-primary">Změnit údaje</button>

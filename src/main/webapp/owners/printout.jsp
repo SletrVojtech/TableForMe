@@ -29,7 +29,6 @@
         LocalDate l = LocalDate.parse(request.getParameter("date"));
         stm.setDate(2, Date.valueOf(l));
         ResultSet rs = stm.executeQuery();
-        conn.close();
         int counter = 0;
         String time;
         Array capacities;
@@ -84,6 +83,7 @@
 <%
 
     }
+    conn.close();
     if (counter == 0 && !type) {
 %>
 <div style="text-align: center">

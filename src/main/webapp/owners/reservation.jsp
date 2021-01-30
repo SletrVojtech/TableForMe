@@ -28,8 +28,9 @@
         PreparedStatement stm = conn.prepareStatement("SELECT id FROM owners WHERE username = ?;");
         stm.setString(1, uid);
         ResultSet rs3 = stm.executeQuery();
-        conn.close();
+
         rs3.next();
+        conn.close();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date d = Calendar.getInstance().getTime();
         Calendar c = Calendar.getInstance();
@@ -43,9 +44,9 @@
         } else if (err.equals("1")) {
             err = "Na daný termín nelze vytvořit rezervaci";
         } else if (err.equals("2")) {
-            err = "Rezervace je v tuto dobu zavřena";
+            err = "Restaurace je v tuto dobu zavřena";
         } else if (err.equals("3")) {
-            err = "Rezervace je v tuto dobu obsazena";
+            err = "Restaurace je v tuto dobu obsazena";
         }
 %>
 <br><br>

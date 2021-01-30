@@ -30,16 +30,18 @@ Pokud nebyl admin uživatel dosud přihlášen, zde proběhne kontrola zadaných
                 stm.setString(1, name);
                 stm.setString(2, pass);
                 ResultSet rs = stm.executeQuery();
-                conn.close();
+
                 if (rs.next()) {
                     /*
                     Přihlášení proběhlo úspěšně, session attribute slouží pro kontrolu přihlášení i na dalších stránkách spadajících pod amin panel.
                      */
+                    conn.close();
                     session.setAttribute("admin", name);
                 } else {
                     /*
                     Zadané údaje neodpovídají, uživatel se musí pokusit o přihlášení znovu.
                      */
+                    conn.close();
                     response.sendRedirect("adminLogin.jsp?err=1");
                 }
 
