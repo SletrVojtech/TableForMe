@@ -11,6 +11,9 @@
     <title>Login</title>
 </head>
 <%
+    /*
+    Formulář pro přihlášení do admin panelu.
+    */
     String err = request.getParameter("err");
     if (err == null) {
         err = "";

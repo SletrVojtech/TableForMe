@@ -13,9 +13,13 @@
 </head>
 <br><br>
 <%
+    /*
+    Pro zaujmutí zákazníka, má restauratér možnost přidání popisku restaurace. Pokud jej vytvářel již dříve,
+     načte se mu původní varianta, kterou může kdykoli upravit.
+     */
     if (uid == null) {
         response.sendRedirect("login.jsp");
-        //https://www.w3schools.com/tags/tag_textarea.asp
+
     } else {
         try {
             Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));

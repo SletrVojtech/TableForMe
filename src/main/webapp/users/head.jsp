@@ -6,6 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    /*
+    Toto je hlavní uživatelský panel. Je importován na všchny stránky spadající pod adresář user.
+     */
+%>
 <html>
 <head>
     <link rel="shortcut icon" href="../images/favicon.ico">
@@ -27,7 +32,7 @@
     <%
     request.setCharacterEncoding("UTF-8");
     String uid = (String) session.getAttribute("user");
-    //https://getbootstrap.com/docs/4.1/components/navbar/
+
 %>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">

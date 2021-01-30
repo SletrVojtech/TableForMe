@@ -6,6 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    /*
+    Toto je hlavní ovládací panel pro restauratéry. Je implementován do všech stránek spadajících do složky owners mimo login.jsp
+     */
+%>
 <html>
 <head>
     <link rel="stylesheet" href="../css/page.css">
@@ -27,12 +32,11 @@
     request.setCharacterEncoding("UTF-8");
     String uid = (String) session.getAttribute("owner");
 
-    //https://getbootstrap.com/docs/4.1/components/navbar/
 %>
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="menu.jsp"> <img src="../images/Table4Me41.png" alt=""></a>
+    <a class="navbar-brand" href="home.jsp"> <img src="../images/Table4Me41.png" alt=""></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

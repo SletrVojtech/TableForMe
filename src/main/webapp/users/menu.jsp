@@ -13,10 +13,14 @@
 
     <title>Table4Me</title>
 </head>
-<% if (null != session.getAttribute("refreshcount")) {
-    session.setAttribute("refreshcount", null);
-    response.setHeader("REFRESH", "0");
-}
+<%
+    /*
+    Hlavní strana webu, pokud nebyl dosud uživatel přihlášen, proběhne kontrola přihlašovacích údajů.
+     */
+    if (null != session.getAttribute("refreshcount")) {
+        session.setAttribute("refreshcount", null);
+        response.setHeader("REFRESH", "0");
+    }
     String uid2 = (String) session.getAttribute("user");
     if (uid2 == null) {
         String username = request.getParameter("username");
@@ -30,9 +34,15 @@
                 stm.setString(2, pass);
                 ResultSet rs = stm.executeQuery();
                 if (rs.next()) {
+                    /*
+                    Přihlášení bylo úspěšné.
+                     */
                     session.setAttribute("user", username);
 
                 } else {
+                    /*
+                    Přihlášení bylo neúspěšné. Uživatel musí údaje zadat znovu
+                     */
                     response.sendRedirect("login.jsp?err=1");
                 }
                 conn.close();

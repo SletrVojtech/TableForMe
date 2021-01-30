@@ -13,6 +13,9 @@
     <title>Registrace</title>
 </head>
 <%
+    /*
+    Zde proběhne zpracování registrace.
+     */
     if (request.getParameter("name") == null) {
         response.sendRedirect("menu.jsp");
     } else {
@@ -24,6 +27,9 @@
 
 
         Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
+        /*
+        Proběhne také kontrola stejnosti hesel a existence stejného uživatelského jména.
+         */
         if (!pass.equals(pass2)) {
             response.sendRedirect("registration.jsp?err=1");
         } else {
@@ -33,12 +39,12 @@
             if (rs.next()) {
                 response.sendRedirect("registration.jsp?err=2");
 
-    } else {
+            } else {
 
-            PreparedStatement stm2 = conn.prepareStatement("INSERT INTO users (username,password) VALUES(?,crypt(?, gen_salt('bf')));");
-            stm2.setString(1, name);
-            stm2.setString(2, pass);
-            stm2.executeUpdate();
+                PreparedStatement stm2 = conn.prepareStatement("INSERT INTO users (username,password) VALUES(?,crypt(?, gen_salt('bf')));");
+                stm2.setString(1, name);
+                stm2.setString(2, pass);
+                stm2.executeUpdate();
 
 %>
 
@@ -51,6 +57,6 @@
 </body>
 </html>
 <% }
-    }
-    }
+}
+}
 %>

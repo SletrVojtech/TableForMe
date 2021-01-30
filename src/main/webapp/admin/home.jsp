@@ -11,7 +11,10 @@
 <head>
     <title>Admin home</title>
 </head>
-<%
+<% /*
+Hlavní stránka admin panelu.
+Pokud nebyl admin uživatel dosud přihlášen, zde proběhne kontrola zadaných údajů.
+*/
     request.setCharacterEncoding("UTF-8");
     String uid = (String) session.getAttribute("admin");
     if (uid == null) {
@@ -28,9 +31,14 @@
                 stm.setString(2, pass);
                 ResultSet rs = stm.executeQuery();
                 if (rs.next()) {
+                    /*
+                    Přihlášení proběhlo úspěšně, session attribute slouží pro kontrolu přihlášení i na dalších stránkách spadajících pod amin panel.
+                     */
                     session.setAttribute("admin", name);
                 } else {
-                    //https://www.tutorialspoint.com/how-to-read-request-parameters-passed-in-url-using-jsp
+                    /*
+                    Zadané údaje neodpovídají, uživatel se musí pokusit o přihlášení znovu.
+                     */
                     response.sendRedirect("adminLogin.jsp?err=1");
                 }
 

@@ -10,13 +10,16 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.Calendar" %>
+<%@ page import="java.time.LocalDate" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="menu.jsp" %>
 <html>
 <head>
     <title>Menu</title>
 </head>
-<%
+<% /*
+Hlavní stránka pro správu restaurace. Pokud nebyl dosud uživatel přihlášen, proběhne kontrola přihlašovacích údajů.
+*/
     if (uid == null) {
         String username = request.getParameter("username");
         if (username == null) {
@@ -31,9 +34,15 @@
                 stm.setString(2, pass);
                 ResultSet rs = stm.executeQuery();
                 if (rs.next()) {
+                    /*
+                    Přihlášení úspěšné.
+                     */
                     session.setAttribute("owner", username);
 
                 } else {
+                    /*
+                    Přihlášení nebylo úspěšné, uživatel musí zadat údaje znovu.
+                     */
                     response.sendRedirect("login.jsp?err=1");
                 }
                 conn.close();
@@ -48,6 +57,9 @@
 %>
 <body>
 <%
+    /*
+    Zde proběhne kontrola, zda restaurace již má zadané údaje potřebné k zobrazení uživatelům.
+     */
     uid = (String) session.getAttribute("owner");
     if (uid != null) {
         try {
@@ -72,8 +84,14 @@
 
 %>
 <%
+    /*
+    Zde je formulář pro vypsání rezervací na dané datum. Také proběhne smazání rezervací z minulého dne. Toto není optimální řešení.
+    Jelikož ale free hosting na Heroku.com neumožňuje nonstop běžící server, aby mohlo promazávání probíhat pravidelně,
+    zdá se mi toto jako nejlepší a nejjednodušší řešení jinak poměrně komplikovaného problému, způsobeného hostingem.
+     */
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     Date d = Calendar.getInstance().getTime();
+    LocalDate l = LocalDate.now();
     Calendar c = Calendar.getInstance();
     c.setTime(d);
     c.add(Calendar.DAY_OF_MONTH, 30);
@@ -82,8 +100,8 @@
     c.add(Calendar.DAY_OF_MONTH, -31);
     String date3 = df.format(c.getTime());
     Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
-    PreparedStatement stm = conn.prepareStatement("DELETE FROM reservations WHERE date=?;");
-    stm.setString(1, date3);
+    PreparedStatement stm = conn.prepareStatement("DELETE FROM reservations WHERE date<?;");
+    stm.setDate(1, java.sql.Date.valueOf(l));
     stm.executeUpdate();
     conn.close();
 

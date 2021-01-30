@@ -11,6 +11,10 @@
     <title>Přidání restaurace</title>
 </head>
 <%
+    /*
+    Formulář pro vytvoření nové restaurace.
+
+     */
     String uid = (String) session.getAttribute("admin");
     if (uid == null) {
         response.sendRedirect("adminLogin.jsp");

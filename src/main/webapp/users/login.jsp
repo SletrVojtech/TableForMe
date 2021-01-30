@@ -11,7 +11,9 @@
 
     <title>Přihlášení uživatele</title>
 </head>
-<%
+<% /*
+Zde se může uživatel přihlásit ke svému účtu.
+*/
     String err = request.getParameter("err");
     if (err == null) {
         err = "";
@@ -33,9 +35,6 @@
                        pattern="[A-Za-z0-9]{3,}">
             </div>
 
-            <%
-                //https://www.w3schools.com/tags/att_input_pattern.asp
-            %>
             <div class="form-group ">
                 <label for="pass">Zadejte heslo:</label>
                 <input type="password" class="form-control" id="pass" name="password" minlength="8" maxlength="15"

@@ -13,7 +13,9 @@
 <head>
     <title>Ukládání úprav</title>
 </head>
-<%
+<% /*
+ Zde proběhne uložení aktualizovaných dat o kapacitě a otevírací době.
+*/
 
     if (uid == null) {
         response.sendRedirect("login.jsp");
@@ -35,6 +37,9 @@
             Integer[] time = new Integer[14];
             SimpleDateFormat format = new SimpleDateFormat("H:m");
             java.util.Date date;
+            /*
+            Zde proběhne načtení hodnot pro otevírací dobu, tyto hodnoty jsou přepočteny na minuty a v poli uloženy do databáze.
+             */
             for (int i = 0; i < 7; i++) {
                 par = i + open;
                 date = format.parse(request.getParameter(par));
@@ -44,6 +49,9 @@
                 time[2 * i + 1] = date.getHours() * 60 + date.getMinutes();
 
             }
+            /*
+            Kapacita je podle klíče rozložena do pole a zadána v pořadí od nejmenšího po největší stůl do databáze
+             */
             String places = request.getParameter("capacity");
             String[] cap = places.split(",");
             Integer[] capacity = new Integer[cap.length * 2];
@@ -68,7 +76,6 @@
 
                 }
             }
-            //https://www.2ndquadrant.com/en/blog/using-java-arrays-to-insert-retrieve-update-postgresql-arrays/
             PreparedStatement stm2 = conn.prepareStatement("UPDATE restaurants SET time=?, capacity=? WHERE id=" + id + ";");
             Array times = conn.createArrayOf("int4", time);
             Array capacities = conn.createArrayOf("int4", capacity);

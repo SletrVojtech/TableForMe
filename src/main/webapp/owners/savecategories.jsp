@@ -13,7 +13,9 @@
     <title>Title</title>
 </head>
 <%
-
+    /*
+    Zde proběhne uložení druhů kuchyně do databáze.
+     */
     if (uid == null) {
         response.sendRedirect("login.jsp");
     } else {
@@ -33,7 +35,7 @@
                 }
             }
 
-            //https://www.2ndquadrant.com/en/blog/using-java-arrays-to-insert-retrieve-update-postgresql-arrays/
+
             PreparedStatement stm2 = conn.prepareStatement("UPDATE restaurants SET category=?WHERE id=" + id + ";");
             if (cat == null) {
                 stm2.setArray(1, null);

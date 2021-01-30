@@ -11,6 +11,7 @@
 <%@ page import="java.time.DayOfWeek" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.LocalTime" %>
 <%@include file="menu.jsp" %>
 <head>
     <title>Dostupnost</title>
@@ -18,41 +19,37 @@
 <br><br>
 
 <%
+    /*
+    Zde probíhá zpracování rezervace přidané majitelem restaurace.
+     */
     if (uid == null) {
         response.sendRedirect("login.jsp");
     } else if (request.getParameter("date") == null) {
         response.sendRedirect("home.jsp");
     } else {
-        String[] date = request.getParameter("date").split("-");
-        LocalDate l = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
-        LocalDateTime now = LocalDateTime.now();
-        int year = now.getYear();
-        int month = now.getMonthValue();
-        String month2 = "";
-        String day3 = "";
-        int day2 = now.getDayOfMonth();
-        if (month / 10 == 0) {
-            month2 = "0" + month;
-        } else {
-            month2 += month;
-        }
-        if (day2 / 10 == 0) {
-            day3 = "0" + day2;
-        } else {
-            day3 += day2;
-        }
+        /*
+        Nejdříve se ověří, zda není rezervace na čas, který již proběhl. Rezervaci není možné vytvořit na bližší termín než za 30 minut od aktuálního času.
+         */
+        LocalDate l = LocalDate.parse(request.getParameter("date"));
+        LocalDate nowtime = LocalDate.now();
+        LocalTime now = LocalTime.now();
+
         int hour = now.getHour();
         int minute = now.getMinute();
-        String today = year + "-" + month2 + "-" + day3;
         int todaytime = hour * 60 + minute + 90;
         String[] time = request.getParameter("time").split(":");
         int minutes = Integer.parseInt(time[0]) * 60 + Integer.parseInt(time[1]);
-        if (today.equals(request.getParameter("date")) && todaytime > minutes) {
+        if (l.isEqual(nowtime) && todaytime > minutes) {
             response.sendRedirect("reservation.jsp?err=1");
         } else {
 
 
             try {
+                /*
+                Pokud splňuje předchozí podmínku, načtou se data o restauraci a ověří se, zda není rezervace na termín
+                před otevírací dobou nebo méně než 90 minut před zavírací dobou. Všechny rezervace jsou na dobu 90 minut
+                pobytu hosta + 30 minut na uklizení restaurace.
+                 */
                 Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
                 PreparedStatement stm = conn.prepareStatement("SELECT * FROM restaurants WHERE id=?;");
                 stm.setInt(1, Integer.parseInt(request.getParameter("id")));
@@ -60,7 +57,6 @@
 
                 int id;
                 rs.next();
-                //https://www.geeksforgeeks.org/dayofweek-getvalue-method-in-java-with-examples/
 
                 DayOfWeek dayOfWeek = DayOfWeek.from(l);
                 int day = dayOfWeek.getValue();
@@ -74,27 +70,39 @@
                 if (times[day * 2 - 2] > minutes || (times[day * 2 - 1] - 90) < minutes) {
                     response.sendRedirect("reservation.jsp?err=2");
                 } else {
-                    Statement s2 = conn.createStatement();
-                    ResultSet rs3 = s2.executeQuery("SELECT type FROM reservations WHERE date='" + request.getParameter("date") + "'" +
-                            "AND idRes=" + id + "AND time =1;");
+                    /*
+                    Zde se ověří zda není tato restaurace pro daný den uzavřena.
+                     */
+                    PreparedStatement s2 = conn.prepareStatement("SELECT type FROM reservations WHERE date=? AND idRes=? AND time =1;");
+                    s2.setDate(1,Date.valueOf(l));
+                    s2.setInt(2,id);
+                    ResultSet rs3 = s2.executeQuery();
                     if (rs3.next() && rs3.getBoolean("type") == true) {
                         response.sendRedirect("reservation.jsp?err=2");
                     } else {
 
-
+                        /*
+                        Pokud není, začne výpočet dostupné kapacity restaurace. Ta probíhá čtením z fronty a
+                        zaznamenáváním minimálních hodnot pro každý typ stolu.
+                         */
                         Array places = rs.getArray("capacity");
                         Integer[] capacity = (Integer[]) places.getArray();
                         Integer[] min = capacity;
                         ArrayList<Integer[]> line = new ArrayList();
                         ArrayList<Integer> linetime = new ArrayList();
-                        Statement s = conn.createStatement();
-                        ResultSet rs2 = s.executeQuery("SELECT time,capacity FROM reservations WHERE date='" + request.getParameter("date") + "'" +
-                                "AND idRes=" + id + "AND time BETWEEN " + (minutes - 120) + " AND " + (minutes + 120) + "; ");
+                        PreparedStatement s = conn.prepareStatement("SELECT time,capacity FROM reservations WHERE date= ?AND idRes= ?AND time BETWEEN ? AND ?; ");
+                        s.setDate(1, Date.valueOf(l));
+                        s.setInt(2,id);
+                        s.setInt(3,minutes -120);
+                        s.setInt(4, minutes +120);
+                       ResultSet rs2 = s.executeQuery();
                         Array actualar;
                         Integer[] actual;
                         int counter;
                         while (rs2.next()) {
-
+                            /*
+                            Zde se přidá nalezená rezervace z databáze a uberou se stoly, které obsadí.
+                             */
                             linetime.add(rs2.getInt("time") + 120);
                             actualar = rs2.getArray("capacity");
                             actual = (Integer[]) actualar.getArray();
@@ -107,6 +115,10 @@
                                 capacity[counter + 1] -= actual[i + 1];
                             }
                             while (linetime.get(0) < rs2.getInt("time")) {
+                                /*
+                                Zde se naopak přičtou místa z rezervací, kterým již vypršel časový fond.
+                                 (restaurace je schopna tyto prostory obsadit znovu)
+                                 */
                                 actual = line.get(0);
                                 line.remove(0);
                                 linetime.remove(0);
@@ -118,13 +130,18 @@
                                     capacity[counter + 1] += actual[i + 1];
                                 }
                             }
-
+                            /*
+                            Zde se porovnají minimální hodnoty kapacity.
+                             */
                             for (int i = 0; i < capacity.length; i += 2) {
                                 if (min[i + 1] > capacity[i + 1]) {
                                     min[i + 1] = capacity[i + 1];
                                 }
                             }
                         }
+                        /*
+                        Po zpracování všech předchozích rezervací se vypočte maximální zbývající kapacita restaurace po celou dobu pobytu.
+                         */
                         int mincapacity = 0;
                         for (int i = 0; i < min.length; i += 2) {
                             mincapacity += min[i] * min[i + 1];
@@ -132,8 +149,16 @@
 
                         int number = Integer.parseInt(request.getParameter("number"));
                         if (mincapacity < number) {
+                            /*
+                            Pokud je kapacita menší než počet požadovaných míst, rezervace neproběhne.
+                             */
                             response.sendRedirect("reservation.jsp?err=3");
                         } else {
+                            /*
+                            Pokud je kapacita dostačující proběhne výpočet optimálního usazení hostů. Algoritmus
+                            preferuje usazení k jednomu stolu větší kapacity než k více menším stolům na úkor ztráty kapacity.
+                            A to z důvodu pohodlí hostů a také snažší přípravy restaurace.
+                             */
                             int lenght = min.length;
                             Integer[] occupation = min.clone();
 
@@ -191,12 +216,15 @@
                                     occupation2.add(occupation[i * 2 + 1]);
                                 }
                             }
+                            /*
+                            Rezervace se přidá do databáze a tím se stane platnou.
+                             */
                             Array capacities = conn.createArrayOf("int4", occupation2.toArray());
                             PreparedStatement stm2 = conn.prepareStatement("INSERT INTO reservations (idres,time,date,capacity,name) " +
                                     "VALUES (?,?,?,?,?);");
                             stm2.setInt(1, id);
                             stm2.setInt(2, minutes);
-                            stm2.setString(3, request.getParameter("date"));
+                            stm2.setDate(3, Date.valueOf(l));
                             stm2.setArray(4, capacities);
                             stm2.setString(5, request.getParameter("name"));
                             stm2.executeUpdate();

@@ -15,6 +15,11 @@
     <title>Zadání rezervace</title>
 </head>
 <%
+    /*
+    Tento formulář slouží pro vyhledání dostupných restaurací splňující podmínky. Povinné jsou údaje o počtu hostů, datu a času návštěvy.
+    Ostatní informace jsou pouze pro zúžení spektra výběru. Pokud přešel ze stránky printall.jsp pak je zadáno id restaurace.
+    To slouží jako nejpřesnější údaj vyhledávání.
+     */
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     Date d = Calendar.getInstance().getTime();
     Calendar c = Calendar.getInstance();
@@ -62,6 +67,7 @@
                 <label class="p-2" for="3">Asijská kuchyně</label><br>
             </div>
             <label class="p-2">* - povinné údaje</label>
+            <label class="p-2">Rezervace platí na 90 minut</label>
             <%
                 if (request.getParameter("id") != null) {
             %>

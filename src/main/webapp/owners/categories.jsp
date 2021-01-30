@@ -13,6 +13,9 @@
 </head>
 <br><br>
 <%
+    /*
+    Zde může správce restaurace nastavit druhy kuchyně, na které se restaurace soustředí. To pomůže restauraci při vyhledávání zákazníkem.
+     */
     if (uid == null) {
         response.sendRedirect("login.jsp");
     } else {

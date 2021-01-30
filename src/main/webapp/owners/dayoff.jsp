@@ -17,6 +17,9 @@
 </head>
 <body><br><br>
 <%
+    /*
+    Tato funkce umožňuje restauraci zavřít na celý den.
+     */
     if (uid == null) {
         response.sendRedirect("login.jsp");
     } else {

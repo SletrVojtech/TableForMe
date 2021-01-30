@@ -12,7 +12,9 @@
     <title>Uložení hesla</title>
 </head>
 <%
-
+    /*
+    Zde proběhne uložení změněného hesla.
+     */
     if (uid == null) {
         response.sendRedirect("login.jsp");
     } else if (request.getParameter("oldpass") == null) {
@@ -24,7 +26,9 @@
         String newpass = request.getParameter("newpass");
         String newpass2 = request.getParameter("newpass2");
 
-
+/*
+Nejprve se zkontroluje správnost starého hesla;
+ */
         Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
         PreparedStatement stm = conn.prepareStatement("SELECT id FROM owners WHERE username = ? AND password = crypt(?, password);");
 
@@ -34,6 +38,9 @@
         if (!rs.next()) {
             response.sendRedirect("editpass.jsp?err=2");
         } else if (!newpass.equals(newpass2)) {
+            /*
+           Zde proběhla kontrola nových hesel.
+             */
             response.sendRedirect("editpass.jsp?err=1");
         } else {
             PreparedStatement stm2 = conn.prepareStatement("UPDATE owners SET password = crypt(?, gen_salt('bf')) WHERE username = ?;");

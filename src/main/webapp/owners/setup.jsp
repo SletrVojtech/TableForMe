@@ -12,6 +12,9 @@
     <link rel="shortcut icon" href="../images/favicon.ico">
 </head>
 <%
+    /*
+    Tento formulář slouží pro inicializaci restaurace. Teprve po vyplnění je možné nalézt restauarci ve vyhledávači pro hosty.
+     */
     String uid = (String) session.getAttribute("owner");
     if (uid == null) {
         response.sendRedirect("login.jsp");

@@ -13,6 +13,9 @@
     <title>Ukládání dat restaurace</title>
 </head>
 <%
+    /*
+    Zde probíhá ukládání prvních informací o restauraci. Po provedení tohoto kroku je restaurace dostupná zákazníkům.
+     */
     request.setCharacterEncoding("UTF-8");
     if (uid == null) {
         response.sendRedirect("login.jsp");
@@ -38,7 +41,9 @@
                 Integer[] time = new Integer[14];
                 SimpleDateFormat format = new SimpleDateFormat("H:m");
                 java.util.Date date;
-                //https://stackoverflow.com/questions/14359037/how-can-i-convert-a-string-hhmm-to-a-int-hour-hh-and-int-minute-mm
+                /*
+            Zde proběhne načtení hodnot pro otevírací dobu, tyto hodnoty jsou přepočteny na minuty a v poli uloženy do databáze.
+             */
                 for (int i = 0; i < 7; i++) {
                     par = i + open;
                     date = format.parse(request.getParameter(par));
@@ -48,6 +53,9 @@
                     time[2 * i + 1] = date.getHours() * 60 + date.getMinutes();
 
                 }
+                 /*
+            Kapacita je podle klíče rozložena do pole a zadána v pořadí od nejmenšího po největší stůl do databáze.
+             */
                 String places = request.getParameter("capacity");
                 String[] cap = places.split(",");
                 Integer[] capacity = new Integer[cap.length * 2];
@@ -72,8 +80,9 @@
 
                     }
                 }
-                //https://www.2ndquadrant.com/en/blog/using-java-arrays-to-insert-retrieve-update-postgresql-arrays/
-                //https://www.postgresql.org/message-id/1349107725.96229.YahooMailNeo@web120301.mail.ne1.yahoo.com
+                /*
+                Zde proběhne inicializace restaurace.
+                 */
                 PreparedStatement stm2 = conn.prepareStatement("INSERT INTO restaurants (id,name,city,adress,time,capacity) " +
                         "VALUES (" + id + ",'" + name + "',?,?,?,?);");
                 stm2.setString(1, city);

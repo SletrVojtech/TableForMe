@@ -12,12 +12,15 @@
     <title>Registrace</title>
 </head>
 <%
+    /*
+    Zde se může nový uživatel zaregistrovat.
+     */
     String err = request.getParameter("err");
     if (err == null) {
         err = "";
     } else if (err.equals("1")) {
         err = "Zadaná hesla se neshodují";
-    } else if(err.equals("2")){
+    } else if (err.equals("2")) {
         err = "Uživatel s tímto jménem již existuje";
     }
 
@@ -32,10 +35,6 @@
             <input type="text" class="form-control" id="name" name="name" placeholder="VelkyHladovec" maxlength="20"
                    pattern="[A-Za-z0-9]{3,}">
         </div>
-
-        <%
-            //https://www.w3schools.com/tags/att_input_pattern.asp
-        %>
         <div class="form-group ">
             <p>Heslo musí obsahovat 8-15 znaků včetně alespoň jedné číslice, malého a velkého písmene</p>
             <label for="pass">Zadejte heslo:</label>

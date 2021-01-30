@@ -14,6 +14,9 @@
 <br><br>
 <h2><b>Vaše nadcházející rezervace</b></h2>
 <%
+    /*
+    Zde se vypíší všechny rezervace pro daného uživatele z databáze.
+     */
     if (uid == null) {
         response.sendRedirect("menu.jsp");
     } else {
@@ -37,7 +40,7 @@
     <div class="form-row align-items-center d-flex ">
         <label class="p-3 "><b><%=rs2.getString("name")%>
         </b></label>
-        <label class=" p-2"><%=rs.getString("date")%>
+        <label class=" p-2"><%=rs.getDate("date")%>
         </label>
         <label class=" p-2"><%=time%>
         </label>

@@ -17,6 +17,9 @@
     <title>Přidání rezervace</title>
 </head>
 <%
+    /*
+    Zde může restauratér přidat rezervaci obdrženou z jiného zdroje než je tato stránka.
+     */
     if (uid == null) {
         response.sendRedirect("login.jsp");
     } else {
@@ -66,7 +69,7 @@
             <br>
             <label class="p-2">* - povinné údaje</label>
             <input type="hidden" name="id" value="<%=rs3.getInt("id")%>">
-
+            <label> Rezervace je platná 90 minut, dalších 30 minut je vyhrazeno přípravě pro další hosty.</label>
             <label><%=err%>
             </label>
             <button type="submit" class="btn btn-warning">Zadat</button>

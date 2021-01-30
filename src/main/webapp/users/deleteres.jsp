@@ -13,6 +13,9 @@
     <title>Rezervace zrušena</title>
 </head>
 <%
+    /*
+    Zde proběhne odstranění vybrané rezervace.
+     */
 
 
     if (uid == null) {

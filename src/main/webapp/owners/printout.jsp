@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="menu.jsp" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.time.LocalDate" %>
 <html>
 <head>
     <title>Výpis rezervací</title>
@@ -15,6 +16,9 @@
 <br><br>
 
 <%
+    /*
+    Zde proběhne vypsání rezervací pro zvolený termín.
+     */
     if (uid == null) {
         response.sendRedirect("login.jsp");
     } else {
@@ -22,7 +26,8 @@
         PreparedStatement stm = conn.prepareStatement("SELECT * FROM reservations JOIN owners ON " +
                 "reservations.idres = owners.id WHERE owners.username = ? AND reservations.date = ?;");
         stm.setString(1, uid);
-        stm.setString(2, request.getParameter("date"));
+        LocalDate l = LocalDate.parse(request.getParameter("date"));
+        stm.setDate(2, Date.valueOf(l));
         ResultSet rs = stm.executeQuery();
         int counter = 0;
         String time;
@@ -32,10 +37,12 @@
 %>
 <h2><b>Nadcházející rezervace na den <%=request.getParameter("date")%>
 </b></h2><br>
+<label> Rezervace je platná 90 minut, dalších 30 minut je vyhrazeno přípravě pro další hosty.</label><br>
 <%
     Boolean type = false;
     while (rs.next()) {
         if (rs.getBoolean("type") == true) {
+
 %>
 <div style="text-align: center">
     <h2 style="color: dodgerblue"><b>Restaurace je pro tento den uzavřena</b></h2>

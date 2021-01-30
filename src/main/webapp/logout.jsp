@@ -7,6 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    /*
+    Toto je univerzální odhlášení pro všechny typy účtů.
+     */
     session.invalidate();
     response.sendRedirect("index.jsp");
 %>

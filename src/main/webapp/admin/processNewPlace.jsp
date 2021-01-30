@@ -13,14 +13,20 @@
 </head>
 <body>
 <% request.setCharacterEncoding("UTF-8");
+/*
+Zde proběhne vytvoření nové restaurace
+ */
     String uid = (String) session.getAttribute("admin");
     if (uid == null) {
         response.sendRedirect("adminLogin.jsp");
-    } else if(request.getParameter("name") == null){
+    } else if (request.getParameter("name") == null) {
         response.sendRedirect("home.jsp");
-        }else{
+    } else {
 
         try {
+            /*
+            Nejprve se zkontroluje zda neexistuje již jiná restaurace se  stejným jménem nebo přihlašovacím jménem.
+             */
             Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
             PreparedStatement stm = conn.prepareStatement("SELECT id FROM owners WHERE name = ? OR username = ?;");
             stm.setString(1, request.getParameter("name"));
@@ -31,6 +37,9 @@
 Zařízení již existuje <%
 
 } else {
+                /*
+                Pak proběhne přidání restaurace do databáze, zbytek údajů nastaví majitel restaurace.
+                 */
     PreparedStatement stm2 = conn.prepareStatement("INSERT INTO owners (name,password,username,state) VALUES (?,crypt(?,gen_salt('bf')),?, FALSE)");
     stm2.setString(1, request.getParameter("name"));
     stm2.setString(2, request.getParameter("password"));

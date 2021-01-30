@@ -8,10 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="head.jsp" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.time.LocalDate" %>
 <head>
     <title>Dokončení rezervace</title>
 </head>
 <br><br><%
+    /*
+    Zde proběhne dokončení rezervace a zadání do databáze.
+     */
     request.setCharacterEncoding("UTF-8");
     if (uid == null) {
         response.sendRedirect("login.jsp");
@@ -25,11 +29,15 @@
             int idus = Integer.parseInt(request.getParameter("idus"));
             String ocupation = request.getParameter("ocuppy");
             int time = Integer.parseInt(request.getParameter("time"));
-            String date = request.getParameter("date");
+            LocalDate l = LocalDate.parse(request.getParameter("date"));
             String name = request.getParameter("name");
             if (ocupation == null) {
                 response.sendRedirect("menu.jsp");
             }
+
+            /*
+            Stoly, které jsou rezervací obsazeny jsou podle klíče rozloženy ze String na pole a uloženy do databáze.
+             */
             String[] cap = ocupation.split(",");
             Integer[] capacity = new Integer[cap.length * 2];
             for (int i = 0; i < cap.length; i++) {
@@ -43,7 +51,7 @@
             stm.setInt(1, idres);
             stm.setInt(2, idus);
             stm.setInt(3, time);
-            stm.setString(4, date);
+            stm.setDate(4, Date.valueOf(l));
             stm.setArray(5, capacities);
             stm.setString(6, name);
             stm.executeUpdate();
@@ -60,6 +68,7 @@
 <%
         } catch (Exception e) {
             e.printStackTrace();
+
         }
     }
 %>

@@ -12,6 +12,9 @@
     <title>Ukládání popisku restaurace</title>
 </head>
 <%
+    /*
+    Zde proběhne uložení popisu restaurace do databáze.
+     */
     if (uid == null) {
         response.sendRedirect("login.jsp");
     } else {

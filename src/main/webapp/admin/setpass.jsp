@@ -11,6 +11,9 @@
     <title>Nové heslo</title>
 </head>
 <%
+    /*
+    Toto je formulář pro vyplnění nového hesla k restauraci.
+     */
 
     request.setCharacterEncoding("UTF-8");
     String uid = (String) session.getAttribute("admin");

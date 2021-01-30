@@ -14,7 +14,9 @@
 <br><br>
 <div class="d-flex justify-content-center">
     <form action="saveedited.jsp" method="post">
-        <%
+        <% /*
+        Zde může restauratér upravit otevírací dobu a kapacitu restaurace. Zprvu se načtou původní hodnoty.
+        */
 
             if (uid == null) {
                 response.sendRedirect("login.jsp");

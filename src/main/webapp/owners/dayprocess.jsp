@@ -8,11 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="menu.jsp" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.time.LocalDate" %>
 <html>
 <head>
     <title>Uzavření restaurace</title>
 </head>
-<%
+<% /*
+
+Zde probíhá proces uzavíraní restaurace.
+*/
     if (uid == null) {
         response.sendRedirect("login.jsp");
     } else if (request.getParameter("date") == null) {
@@ -25,15 +29,21 @@
             ResultSet rs = stm.executeQuery();
             rs.next();
             int id = rs.getInt("id");
-
+/*
+Nejprve se vymažou všechny existující rezervace.
+ */
             PreparedStatement stm2 = conn.prepareStatement("DELETE FROM reservations WHERE idres = ? AND date=?;");
             stm2.setInt(1, id);
-            stm2.setString(2, request.getParameter("date"));
+            LocalDate l = LocalDate.parse(request.getParameter("date"));
+            stm2.setDate(2, Date.valueOf(l));
             stm2.executeUpdate();
-            PreparedStatement stm3 = conn.prepareStatement("INSERT INTO reservations (idres,time,date,name,type ) VALUES" +
-                    "(?,1,?,'ZAVŘENO',TRUE);");
+            /*
+            Poté se vytvoří speciální rezervace, kterou systém později identifikuje jako uzavřenou restauraci.
+             */
+            PreparedStatement stm3 = conn.prepareStatement("INSERT INTO reservations (idres,date,time,name,type ) VALUES" +
+                    "(?,?,1,'ZAVŘENO',TRUE);");
             stm3.setInt(1, id);
-            stm3.setString(2, request.getParameter("date"));
+            stm3.setDate(2, Date.valueOf(l));
             stm3.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

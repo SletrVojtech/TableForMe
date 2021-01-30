@@ -12,6 +12,9 @@
     <title>Dokončení rezervace</title>
 </head>
 <br><br><%
+    /*
+    Zde může uživatel vidět podrobnosti restaurace a pokud byl dostupný termín tak může i dokončit rezervaci.
+     */
     if (uid == null) {
         response.sendRedirect("login.jsp");
     } else if (request.getParameter("id") == null) {
@@ -32,7 +35,9 @@
             if (request.getParameter("id").isEmpty()) {
                 response.sendRedirect("menu.jsp");
             } else {
-
+                /*
+                Nejprve se vypíše naázev, adresa, druhy kuchyně, otevírací doba a dny, kdy je restaurace uzavřena.
+                 */
 
                 String[] dny = new String[]{"Pondělí:", "Úterý:", "Středa:", "Čtvrtek:", "Pátek:", "Sobota:", "Neděle:"};
 
@@ -81,10 +86,7 @@
     <label class="p-2"><%=description%>
     </label>
     <%
-        String dop, dcl;
         for (int i = 0; i < times.length / 2; i++) {
-            dop = i + "1";
-            dcl = i + "2";
             String so = times[2 * i] / 60 + ":";
             if (times[2 * i] % 60 / 10 == 0) {
                 so = so + "0" + times[2 * i] % 60;
@@ -121,11 +123,13 @@
     <%
         }
     %>
-    <label><%=rs3.getString("date")%>
+    <label><%=rs3.getDate("date")%>
     </label><br>
     <%
         }
-
+/*
+Pokud uživateli na minulé straně byl nalezen volný termín pro rezervaci, může ji zde zadáním jména dokončit.
+ */
         if (request.getParameter("time") != null) {
 
             int time = Integer.parseInt(request.getParameter("time"));

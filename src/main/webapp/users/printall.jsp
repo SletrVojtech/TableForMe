@@ -16,6 +16,9 @@
 <h3 style="color: black"><b>Výpis všech dostupných restaurací:</b></h3><br><br>
 
 <%
+    /*
+    Zde může i nepřihlášený uživatel vypsat všechny restaurace se zakládními informacemi.
+     */
     try {
 
         Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));

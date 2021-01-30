@@ -11,7 +11,10 @@
 <head>
     <title>Reset hesla</title>
 </head>
-<%
+<% /*
+
+Pokud majitel restaurace zapomene heslo k účtu, je možné jej zapomoci admina obnovit. Zde se vypíší všechny existující restaurace.
+*/
     request.setCharacterEncoding("UTF-8");
     String uid = (String) session.getAttribute("admin");
     if (uid == null) {

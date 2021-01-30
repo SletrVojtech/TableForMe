@@ -14,6 +14,9 @@
 
 
 <%
+    /*
+    Zde si může uživatel změnit heslo.
+     */
     if (uid == null) {
         response.sendRedirect("menu.jsp");
     } else {

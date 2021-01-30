@@ -12,6 +12,9 @@
     <title>Uložení hesla</title>
 </head>
 <%
+    /*
+    Zde se uloží nové heslo k vybrané restauraci do databáze.
+     */
 
     request.setCharacterEncoding("UTF-8");
     String uid = (String) session.getAttribute("admin");

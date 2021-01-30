@@ -12,6 +12,9 @@
     <title>Uložení hesla</title>
 </head>
 <%
+    /*
+Zde proběhne uložení změněného hesla.
+ */
     if (uid == null) {
         response.sendRedirect("menu.jsp");
     } else if (request.getParameter("pass") == null) {
@@ -30,9 +33,15 @@
         stm.setString(1, uid);
         stm.setString(2, oldpass);
         ResultSet rs = stm.executeQuery();
+        /*
+Nejprve se zkontroluje správnost starého hesla.
+ */
         if (!rs.next()) {
             response.sendRedirect("changepass.jsp?err=2");
         } else if (!newpass.equals(newpass2)) {
+                        /*
+           Zde proběhla kontrola nových hesel.
+             */
             response.sendRedirect("changepass.jsp?err=1");
         } else {
             PreparedStatement stm2 = conn.prepareStatement("UPDATE owners SET password = crypt(?, gen_salt('bf')) WHERE username = ?;");

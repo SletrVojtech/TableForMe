@@ -11,6 +11,9 @@
     <title>Změna hesla</title>
 </head>
 <%
+    /*
+    Zde si může restauratér změnit heslo k restauraci.
+     */
     if (uid == null) {
         response.sendRedirect("login.jsp");
     } else {
