@@ -45,6 +45,7 @@
                 capacity[i * 2] = Integer.parseInt(s[0]);
                 capacity[i * 2 + 1] = Integer.parseInt(s[1]);
             }
+
             Array capacities = conn.createArrayOf("int4", capacity);
             PreparedStatement stm = conn.prepareStatement("INSERT INTO reservations (idres,idus,time,date,capacity,name) " +
                     "VALUES (?,?,?,?,?,?);");
