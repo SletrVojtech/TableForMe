@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="head.jsp" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.time.LocalDate" %>
 <head>
     <title>Vaše rezervace</title>
 </head>
@@ -20,10 +21,12 @@
     if (uid == null) {
         response.sendRedirect("menu.jsp");
     } else {
+        LocalDate l = LocalDate.now();
         Connection conn = DriverManager.getConnection(System.getenv("JDBC_DATABASE_URL"));
-        PreparedStatement stm = conn.prepareStatement("SELECT date,time,name,idres,reservations.id FROM reservations INNER JOIN users ON reservations.idus = users.id WHERE users.username =? ORDER BY" +
+        PreparedStatement stm = conn.prepareStatement("SELECT date,time,name,idres,reservations.id FROM reservations INNER JOIN users ON reservations.idus = users.id WHERE users.username =? AND date>=? ORDER BY" +
                 " reservations.date, reservations.time;");
         stm.setString(1, uid);
+        stm.setDate(2, java.sql.Date.valueOf(l));
         ResultSet rs = stm.executeQuery();
         PreparedStatement stm2 = conn.prepareStatement("SELECT name,city,adress FROM restaurants WHERE id=? ");
         ResultSet rs2;

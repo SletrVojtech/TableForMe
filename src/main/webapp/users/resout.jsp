@@ -62,22 +62,22 @@ Zde probíhá vyhledání dostupných rezervací podle zadaných údajů.
                     rs = stm.executeQuery();
                 } else if ((!request.getParameter("city").equals("")) && request.getParameterValues("0") != null) {
                     String[] arr = request.getParameterValues("0");
-                    String s = "SELECT * FROM restaurants WHERE city=? AND ? = ANY(category)";
+                    String s = "SELECT * FROM restaurants WHERE city LIKE ? AND( ? = ANY(category)";
                     String p = "OR ? = ANY (category)";
                     for (int i = 1; i < arr.length; i++) {
                         s += p;
                     }
-                    s += ";";
+                    s += ");";
 
                     stm = conn.prepareStatement(s);
-                    stm.setString(1, request.getParameter("city"));
+                    stm.setString(1,"%" + request.getParameter("city") + "%");
                     for (int i = 2; i < arr.length + 2; i++) {
                         stm.setInt(i, Integer.parseInt(arr[i - 2]));
                     }
                     rs = stm.executeQuery();
                 } else if ((!request.getParameter("city").equals(""))) {
-                    stm = conn.prepareStatement("SELECT * FROM restaurants WHERE city=?");
-                    stm.setString(1, request.getParameter("city"));
+                    stm = conn.prepareStatement("SELECT * FROM restaurants WHERE city LIKE ?");
+                    stm.setString(1,"%" + request.getParameter("city") + "%");
                     rs = stm.executeQuery();
                 } else if (request.getParameterValues("0") != null) {
                     String[] arr = request.getParameterValues("0");
@@ -222,7 +222,7 @@ Zde probíhá vyhledání dostupných rezervací podle zadaných údajů.
                     }
 
   /*
-                        Po zpracování všech předchozích rezervací se vypočte maximální zbývající kapacita restaurace po celou dobu pobytu.
+                        Po zpracování všech předchozích rezervací se vypočte minimální zbývající kapacita restaurace po celou dobu pobytu.
                          */
                     int mincapacity = 0;
                     for (int i = 0; i < min.length; i += 2) {

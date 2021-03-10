@@ -33,6 +33,9 @@
     request.setCharacterEncoding("UTF-8");
     String uid = (String) session.getAttribute("user");
 
+    /*
+Navbar je inspirován ukázkovým komponentem od Bootsrapu https://getbootstrap.com/docs/4.1/components/navbar/
+ */
 %>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">

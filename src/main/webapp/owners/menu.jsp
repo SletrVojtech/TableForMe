@@ -31,10 +31,13 @@
     <%
     request.setCharacterEncoding("UTF-8");
     String uid = (String) session.getAttribute("owner");
-
+/*
+Navbar je inspirován ukázkovým komponentem od Bootsrapu https://getbootstrap.com/docs/4.1/components/navbar/
+ */
 %>
 
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="home.jsp"> <img src="../images/Table4Me41.png" alt=""></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

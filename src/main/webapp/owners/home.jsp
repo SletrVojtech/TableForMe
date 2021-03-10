@@ -16,7 +16,7 @@
 <html>
 <head>
     <title>Menu</title>
-</head>
+</head><br><br>
 <% /*
 Hlavní stránka pro správu restaurace. Pokud nebyl dosud uživatel přihlášen, proběhne kontrola přihlašovacích údajů.
 */
